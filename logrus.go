@@ -112,5 +112,5 @@ func (o *limlogrusImpl) convertParams(a ...interface{}) (string, logrus.Fields) 
 		return msg, fields
 
 	}
-	return "", nil
+	return paramErr, nil
 }
