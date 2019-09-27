@@ -30,7 +30,7 @@ func main() {
 	for i := 0; i <= 10000000; i++ {
 		l.ErrorL("limiter1", fmt.Sprintf("%d", i))
 		l.WarnL("limiter1", fmt.Sprintf("%d", i))
-		l.TraceL("limiter1", fmt.Sprintf("%d", i))
+		l.TraceL("limiter1", fmt.Sprintf("%d", i)) // Won't log. At DebugLevel
 		l.InfoL("limiter1", fmt.Sprintf("%d", i))
 		l.DebugL("limiter1", fmt.Sprintf("%d", i))
 		// l.Debug(i) // <--- This will spew every i

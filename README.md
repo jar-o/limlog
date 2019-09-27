@@ -129,3 +129,22 @@ lkey := fmt.Sprintf("sub%d", orgID)
 l.SetLimiter(lkey, 1, 1)
 l.WarnL(lkey, fmt.Sprintf("Org %d has reached their subscription limit for item %d", orgID, itemID)
 ```
+
+# Logrus
+
+The [logrus](https://github.com/sirupsen/logrus) package provides more advanced
+behavior than the standard `log` package. For starters, it can have logger
+instances in addition to a single package logger. The advantage of logger
+instances is that you can have multiple custom loggers within a single process.
+
+To set that up, just call `NewLimlogrusInstance()`.
+
+```
+	l := limlog.NewLimlogrusInstance()
+	inst := l.L.GetLogger().(*logrus.Logger)
+	// ... adjust settings on inst ...
+```
+
+See the
+[advanced](https://github.com/jar-o/limlog/blob/master/examples/logrus/advanced/main.go)
+example for details on how this works.
