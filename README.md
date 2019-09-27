@@ -127,7 +127,7 @@ setup a key for this and use `WarnL()`:
 ```
 lkey := fmt.Sprintf("sub%d", orgID)
 l.SetLimiter(lkey, 1, 1)
-l.WarnL(lkey, fmt.Sprintf("Org %d has reached their subscription limit for item %d", orgID, itemID)
+l.WarnL(lkey, fmt.Sprintf("Org %d has reached their subscription limit at item %d", orgID, itemID)
 ```
 
 # Logrus
