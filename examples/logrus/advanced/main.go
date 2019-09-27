@@ -18,7 +18,7 @@ func main() {
 	if err == nil {
 		inst.Out = file
 	} else {
-		inst.Info("Failed to log to file, using default stderr")
+		l.Info("Failed to log to file, using default stderr")
 	}
 	inst.Formatter = &logrus.JSONFormatter{}
 	inst.Level = logrus.DebugLevel
