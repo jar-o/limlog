@@ -105,7 +105,7 @@ l.SetLimiter("mylimiterkey", 1, 1)
 l.InfoL("mylimiterkey", ...)
 ```
 
-Note that we're using `WarnL()` instead of `Warn()`.
+Note that we're using `InfoL()` instead of `Info()`.
 
 The rate limiter is designed around keys, which are just strings that should
 make sense for whatever context in which you find yourself logging. For example,
