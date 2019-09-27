@@ -14,17 +14,30 @@ applies that to log lines. It's simple to use, and works out of the box with the
 standard [log](https://golang.org/pkg/log/) package, as well as the popular
 [logrus](https://github.com/sirupsen/logrus) package.
 
-## Getting
+## Install
 
-Run
+Just run
 
 ```
 go get -u github.com/jar-o/limlog
 ```
 
+to install.
+
+## Get a feel for it
+
+You can run the included
+[examples](https://github.com/jar-o/limlog/blob/master/examples)
+pretty easily, e.g.
+
+```
+go run examples/log/main.go
+```
+
+
 ## Details
 
-`limlog` is a pretty simple and lightweight level logger at it's core. There are
+`limlog` is a simple and lightweight level logger at its core. There are
 several [examples](https://github.com/jar-o/limlog/blob/master/examples) in this
 repo that you can refer to. However, a quick example of using the standard `log`
 package would look a little like
