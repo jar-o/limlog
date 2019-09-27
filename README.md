@@ -134,7 +134,7 @@ l.WarnL(lkey, fmt.Sprintf("Org %d has reached their subscription limit at item %
 
 Now you'll see a log line for when the customer's subscription is hit, but no more than once a second.
 
-# Logrus
+## Logrus
 
 The [logrus](https://github.com/sirupsen/logrus) package provides more advanced
 behavior than the standard `log` package. For starters, it can have logger
