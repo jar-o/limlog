@@ -142,9 +142,9 @@ instances is that you can have multiple custom loggers within a single process.
 To set that up, just call `NewLimlogrusInstance()`.
 
 ```
-	l := limlog.NewLimlogrusInstance()
-	inst := l.L.GetLogger().(*logrus.Logger)
-	// ... adjust settings on inst ...
+l := limlog.NewLimlogrusInstance()
+inst := l.L.GetLogger().(*logrus.Logger)
+// ... Adjust settings on inst ...
 ```
 
 See the
