@@ -130,6 +130,8 @@ l.SetLimiter(lkey, 1, 1)
 l.WarnL(lkey, fmt.Sprintf("Org %d has reached their subscription limit at item %d", orgID, itemID)
 ```
 
+Now you'll see a logline for when the customer's subscription is hit, but no more than once a second.
+
 # Logrus
 
 The [logrus](https://github.com/sirupsen/logrus) package provides more advanced
