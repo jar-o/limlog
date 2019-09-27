@@ -6,7 +6,7 @@ Golang logger with rate limiting
 Logging often gets in that uncomfortable place where you spam too much, or omit
 too much, and it's hard to always get it just right -- where "just right" means
 enough logging to tell you what's going on, and not so much that you're drowning
-in loglines.
+in log lines.
 
 Enter rate limiting and `limlog`. This package uses simple token bucket rate
 limiting -- usually the same algorithm generating `429` on your requests -- and
@@ -61,7 +61,7 @@ func main() {
 	// Total of 4 log lines per second, with a burst of 6
 	l.SetLimiter("limiter1", 4, 6)
 
-	l.Info("You don't have to limit your loglines if you don't want.")
+	l.Info("You don't have to limit your log lines if you don't want.")
 
 	for i := 0; i <= 10000000; i++ {
 		l.DebugL("limiter1", i)
@@ -97,10 +97,12 @@ However, for limiting you first setup a limiter, then use the `L` version of the
 log level calls. E.g.
 
 ```
+// This limiter allows only one log line per second, with a burst of one (i.e.
+// no burst)
 l.SetLimiter("mylimiterkey", 1, 1)
 
 // In a loop somwhere:
-l.WarnL("mylimiterkey", ...)
+l.InfoL("mylimiterkey", ...)
 ```
 
 Note that we're using `WarnL()` instead of `Warn()`.
@@ -109,7 +111,7 @@ The rate limiter is designed around keys, which are just strings that should
 make sense for whatever context in which you find yourself logging. For example,
 say you have organizations using a service, and at some point they reach the
 max for their subscription level. However, they are using scripts and so the
-logline for reaching their subscription level begins to spam your logs.
+log line for reaching their subscription level begins to spam your logs.
 
 ```
 my-cool-service time="2019-09-23T08:54:15Z" level=warning msg="Org 1679 has reached their subscription limit for item 111" metric=warning
@@ -119,7 +121,7 @@ my-cool-service time="2019-09-23T08:54:15Z" level=warning msg="Org 1679 has reac
 ... etc ...
 ```
 
-Because of the scripts these loglines fill up your logs. However, it's a useful
+Because of the scripts these log lines fill up your logs. However, it's a useful
 signal, knowing that the org is frequently bumping up against their subscription
 limits, so omitting them entirely is not helpful either. With `limlog` you'd
 setup a key for this and use `WarnL()`:
@@ -130,7 +132,7 @@ l.SetLimiter(lkey, 1, 1)
 l.WarnL(lkey, fmt.Sprintf("Org %d has reached their subscription limit at item %d", orgID, itemID)
 ```
 
-Now you'll see a logline for when the customer's subscription is hit, but no more than once a second.
+Now you'll see a log line for when the customer's subscription is hit, but no more than once a second.
 
 # Logrus
 
