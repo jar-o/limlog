@@ -46,6 +46,7 @@ package would look a little like
 package main
 
 import (
+	"log"
 	"github.com/jar-o/limlog"
 )
 
