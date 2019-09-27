@@ -97,8 +97,8 @@ However, for limiting you first setup a limiter, then use the `L` version of the
 log level calls. E.g.
 
 ```
-// This limiter allows only one log line per second, with a burst of one (i.e.
-// no burst)
+// This limiter allows only one log line per second,
+// with a burst of one (i.e. no burst)
 l.SetLimiter("mylimiterkey", 1, 1)
 
 // In a loop somwhere:
