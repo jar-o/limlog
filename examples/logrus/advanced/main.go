@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/jar-o/limlog"
 	"github.com/sirupsen/logrus"
@@ -24,7 +25,7 @@ func main() {
 	inst.Level = logrus.DebugLevel
 
 	// Use the logger as you normally would
-	l.SetLimiter("limiter1", 4, 6)
+	l.SetLimiter("limiter1", 4, 1*time.Second, 6)
 	l.Info("You don't have to limit if you don't want.")
 	l.Debug("It's true.")
 	for i := 0; i <= 10000000; i++ {

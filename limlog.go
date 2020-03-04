@@ -2,6 +2,7 @@ package limlog
 
 import (
 	"golang.org/x/time/rate"
+	"time"
 )
 
 type Logger interface {
@@ -41,9 +42,11 @@ func NewLimlogrusInstance() *Limlog {
 	}
 }
 
-func (o *Limlog) SetLimiter(limiter string, r rate.Limit, b int) {
+// Use SetLimiter to set how many logLines are emitted in a given interval for
+// a specific identifier.
+func (o *Limlog) SetLimiter(limiter string, logLines float64, interval time.Duration, burst int) {
 	if _, ok := o.rateLimiters[limiter]; !ok {
-		o.rateLimiters[limiter] = rate.NewLimiter(r, b)
+		o.rateLimiters[limiter] = rate.NewLimiter(rate.Limit(logLines/interval.Seconds()), burst)
 	}
 }
 

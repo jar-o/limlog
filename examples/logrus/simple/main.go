@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/jar-o/limlog"
 	"github.com/sirupsen/logrus"
@@ -13,7 +14,7 @@ func main() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 
 	l := limlog.NewLimlogrus()
-	l.SetLimiter("limiter1", 4, 6)
+	l.SetLimiter("limiter1", 4, 1*time.Second, 6)
 
 	l.Info("You don't have to limit if you don't want.")
 	l.Debug("It's true.")
