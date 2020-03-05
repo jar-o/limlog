@@ -79,7 +79,13 @@ func (o *zapImpl) Debug(a ...interface{}) {
 }
 
 func (o *zapImpl) Trace(a ...interface{}) {
-	// Not a thing in zap
+	msg, fields := o.convertParams(a...)
+	if fields == nil {
+		o.Zap.DPanic(msg)
+	} else {
+		o.Zap.With(fields...).DPanic(msg)
+
+	}
 }
 
 func (o *zapImpl) Panic(a ...interface{}) {
