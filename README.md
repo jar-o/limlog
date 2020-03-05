@@ -10,9 +10,10 @@ in log lines.
 
 Enter rate limiting and `limlog`. This package uses simple token bucket rate
 limiting -- usually the same algorithm generating `429` on your requests -- and
-applies that to log lines. It's simple to use, and works out of the box with the
-standard [log](https://golang.org/pkg/log/) package, as well as the popular
-[logrus](https://github.com/sirupsen/logrus) package.
+applies that to log lines. It's simple to use, and works out of the box with
+the standard [log](https://golang.org/pkg/log/) package, the
+[logrus](https://github.com/sirupsen/logrus) package, and
+[zap](https://github.com/uber-go/zap).
 
 ## Install
 
@@ -47,6 +48,7 @@ package main
 
 import (
 	"log"
+	"time"
 	"github.com/jar-o/limlog"
 )
 
@@ -59,7 +61,7 @@ func main() {
 	log.SetOutput(os.Stdout)
 
 	// Total of 4 log lines per second, with a burst of 6
-	l.SetLimiter("limiter1", 4, 6)
+	l.SetLimiter("limiter1", 4, 1*time.Second, 6)
 
 	l.Info("You don't have to limit your log lines if you don't want.")
 
@@ -68,6 +70,10 @@ func main() {
 	}
 }
 ```
+
+(Note, the standard `log` package doesn't have an actual concept of levels. E.g.
+calling `Debug()` above really only prefixes the log line with a `DEBUG` tag. It
+doesn't constrain logging based on levels like the other two implementations.)
 
 Loggers that want to integrate into `limlog` must implement the following interface:
 
@@ -99,7 +105,7 @@ log level calls. E.g.
 ```
 // This limiter allows only one log line per second,
 // with a burst of one (i.e. no burst)
-l.SetLimiter("mylimiterkey", 1, 1)
+l.SetLimiter("mylimiterkey", 1, 1*time.Second, 1)
 
 // In a loop somwhere:
 l.InfoL("mylimiterkey", ...)
@@ -127,12 +133,13 @@ limits, so omitting them entirely is not helpful either. With `limlog` you'd
 setup a key for this and use `WarnL()`:
 
 ```
-lkey := fmt.Sprintf("sub%d", orgID)
-l.SetLimiter(lkey, 1, 1)
+lkey := fmt.Sprintf("sub%d-reached-limit", orgID)
+l.SetLimiter(lkey, 1, 30*time.Second, 1)
 l.WarnL(lkey, fmt.Sprintf("Org %d has reached their subscription limit at item %d", orgID, itemID)
 ```
 
-Now you'll see a log line for when the customer's subscription is hit, but no more than once a second.
+Now you'll see a log line for when the customer's subscription is hit, but no
+more than once every 30 seconds.
 
 ## Logrus
 
@@ -152,3 +159,10 @@ inst := l.L.GetLogger().(*logrus.Logger)
 See the
 [advanced](https://github.com/jar-o/limlog/blob/master/examples/logrus/advanced/main.go)
 example for details on how this works.
+
+## Zap
+
+The [zap](https://github.com/uber-go/zap) package is a full featured level
+logger, similar to `logrus`. See the provided
+[example](https://github.com/jar-o/limlog/blob/master/examples/zap/main.go) for
+usage.

@@ -42,9 +42,27 @@ func NewLimlogrusInstance() *Limlog {
 	}
 }
 
+func NewLimlogZap() *Limlog {
+	return &Limlog{
+		L:            NewLimlogZapImpl(),
+		rateLimiters: make(map[string]*rate.Limiter),
+	}
+}
+
+func NewLimlogZapWithConfig(cfg interface{}) *Limlog {
+	return &Limlog{
+		L:            NewLimlogZapWithConfigImpl(cfg),
+		rateLimiters: make(map[string]*rate.Limiter),
+	}
+}
+
 // Use SetLimiter to set how many logLines are emitted in a given interval for
 // a specific identifier.
 func (o *Limlog) SetLimiter(limiter string, logLines float64, interval time.Duration, burst int) {
+	if logLines == float64(burst) {
+		burst++
+	}
+	// Check first, and only add the limiter if it doesn't exist already.
 	if _, ok := o.rateLimiters[limiter]; !ok {
 		o.rateLimiters[limiter] = rate.NewLimiter(rate.Limit(logLines/interval.Seconds()), burst)
 	}
