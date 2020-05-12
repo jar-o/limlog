@@ -26,6 +26,7 @@ func NewZapConfigWithLevel(level zapcore.Level) zap.Config {
 	} else { // Otherwise, start with leanest config, user can config from there
 		cfg = zap.NewProductionConfig()
 	}
+	cfg.DisableCaller = true
 	cfg.Level.SetLevel(level)
 	return cfg
 }
