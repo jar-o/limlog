@@ -20,7 +20,12 @@ func NewLimlogZapImpl() *zapImpl {
 }
 
 func NewZapConfigWithLevel(level zapcore.Level) zap.Config {
-	cfg := zap.NewProductionConfig()
+	var cfg zap.Config
+	if level == zap.DebugLevel {
+		cfg = zap.NewDevelopmentConfig()
+	} else { // Otherwise, start with leanest config, user can config from there
+		cfg = zap.NewProductionConfig()
+	}
 	cfg.Level.SetLevel(level)
 	return cfg
 }
