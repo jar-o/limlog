@@ -18,6 +18,8 @@ func main() {
 	// also tweak cfg further, as required.
 	cfg := limlog.NewZapConfigWithLevel(zap.DebugLevel)
 	l := limlog.NewLimlogZapWithConfig(cfg)
+	z := l.L.GetLogger().(*zap.Logger)
+	defer z.Sync()
 
 	// Setup some limiter tags
 	l.SetLimiter("limiter1", 10, 1*time.Second, 6)

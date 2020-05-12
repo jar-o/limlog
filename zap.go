@@ -14,7 +14,6 @@ func NewLimlogZapImpl() *zapImpl {
 	if err != nil {
 		panic(err)
 	}
-	defer logger.Sync()
 	return &zapImpl{
 		Zap: logger,
 	}
@@ -32,7 +31,6 @@ func NewLimlogZapWithConfigImpl(cfg interface{}) *zapImpl {
 	if err != nil {
 		panic(err)
 	}
-	defer logger.Sync()
 	return &zapImpl{
 		Zap: logger,
 	}
