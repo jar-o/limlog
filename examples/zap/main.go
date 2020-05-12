@@ -17,6 +17,7 @@ func main() {
 	// This sets a NewProduction config, but with a custom AtomicLevel. You can
 	// also tweak cfg further, as required.
 	cfg := limlog.NewZapConfigWithLevel(zap.DebugLevel)
+	cfg.Encoding = "console"
 	l := limlog.NewLimlogZapWithConfig(cfg)
 	z := l.L.GetLogger().(*zap.Logger)
 	defer z.Sync()
