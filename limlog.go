@@ -1,8 +1,10 @@
 package limlog
 
 import (
-	"golang.org/x/time/rate"
 	"time"
+
+	"go.uber.org/zap"
+	"golang.org/x/time/rate"
 )
 
 type Logger interface {
@@ -52,6 +54,13 @@ func NewLimlogZap() *Limlog {
 func NewLimlogZapWithConfig(cfg interface{}) *Limlog {
 	return &Limlog{
 		L:            NewLimlogZapWithConfigImpl(cfg),
+		rateLimiters: make(map[string]*rate.Limiter),
+	}
+}
+
+func NewLimlogWithZap(zap *zap.Logger) *Limlog {
+	return &Limlog{
+		L:            &zapImpl{Zap: zap},
 		rateLimiters: make(map[string]*rate.Limiter),
 	}
 }
